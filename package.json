@@ -4,7 +4,7 @@
   "description": "[![Actions Status](https://github.com/trair/frontend-project-12/workflows/hexlet-check/badge.svg)](https://github.com/trair/frontend-project-12/actions)",
   "main": "index.js",
   "scripts": {
-    "build": "npm run build --prefix frontend",
+    "build": "npm run build --prefix frontend/my-app",
     "start": "npx start-server -s ./frontend/build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
