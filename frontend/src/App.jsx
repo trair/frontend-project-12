@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 import { Navbar } from 'react-bootstrap';
 import Login from './pages/Login';
-import NotFound from './pages/NotFound';
+import NotFound from './pages/NotFoundPage';
 
 const App = () => (
   <div className="h-100">
