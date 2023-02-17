@@ -1,28 +1,32 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
-import {
-  BrowserRouter, Route, Routes,
-} from 'react-router-dom';
-import { Navbar } from 'react-bootstrap';
-import Login from './pages/Login';
-import NotFound from './pages/NotFoundPage';
+import { useState } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-const App = () => (
-  <div className="h-100">
-    <div className="d-flex flex-column h-100">
-      <Navbar
-        className="shadow-sm navbar navbar-expand-lg navbar-light bg-white"
-      >
-        My chat
-      </Navbar>
+import Chat from './pages/Chat';
+import Login from './pages/Login';
+import NotFoundPage from './pages/notFoundPage';
+
+import Nav from './components/Nav';
+
+
+const App = () => {
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  console.log(token);
+  {/* if (!token) {
+    return <Login setToken={setToken} />
+  } */}
+
+  return (
+    <>
+      <Nav />
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="/" element={<Chat />} />
+          <Route path="/login" element={<Login setToken={setToken}/>} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
-    </div>
-  </div>
-);
+    </>
+  );
+};
 
 export default App;
