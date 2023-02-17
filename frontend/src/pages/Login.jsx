@@ -1,5 +1,10 @@
-import * as yup from 'yup';
 import { useFormik } from 'formik';
+import axios from 'axios';
+
+const loginUser = async (username, password) => {
+  const data = await axios.post('/api/v1/login', { username , password });
+  console.log(data);
+}
 
 let schema = yup.object().shape({
   username: yup.string().required(),
@@ -13,6 +18,9 @@ const Login = () => {
       password: '',
     },
     validationSchema: schema,
+    onSubmit: ({ username, password }) => {
+      loginUser(username, password);
+    }
   });
 
   return (
