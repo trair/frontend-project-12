@@ -26,7 +26,7 @@ const Channels = () => {
           key={index}
           onClick={handleActiveChannel}
           action="true"
-          active={id == channel.id}
+          active={id === channel.id}
         >
           {channel.name}
         </ListGroup.Item>
