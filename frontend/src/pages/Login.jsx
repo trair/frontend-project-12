@@ -1,5 +1,4 @@
 import { useFormik } from 'formik';
-import schema from '../schemas/index.js';
 import axios from 'axios';
 import { useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
