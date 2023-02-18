@@ -6,7 +6,7 @@ const messagesSlice = createSlice({
   initialState: [],
   extraReducers: (builder) => {
     builder.addCase(fetchAuthorizationData.fulfilled, (state, { payload }) => {
-      return payload.messages;
+      state = [...state, ...payload.messages];
     })
   }
 });

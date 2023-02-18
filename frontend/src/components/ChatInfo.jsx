@@ -9,7 +9,7 @@ const ChatInfo = () => {
   return (
     <div className="bg-light mb-4 p-3 shadow-sm small">
       <p className="m-0">
-        <b>{channel ? channel.name : ''}</b>
+      <b>{channel ? `# ${channel.name}` : ''}</b>
       </p>
       <span className="text-muted">0 сообщений</span>
     </div>
