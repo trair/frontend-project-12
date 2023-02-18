@@ -4,11 +4,18 @@ import fetchAuthorizationData from '../thunk.js';
 const messagesSlice = createSlice({
   name: 'messages',
   initialState: [],
+  reducers: {
+    addMessage: (state, { payload }) => {
+      state.push(payload);
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchAuthorizationData.fulfilled, (state, { payload }) => {
-      state = [...state, ...payload.messages];
+      console.log(payload);
+      return payload.messages;
     })
   }
 });
 
+export const { addMessage } = messagesSlice.actions;
 export default messagesSlice.reducer;
