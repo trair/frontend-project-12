@@ -1,8 +1,9 @@
 import { useFormik } from 'formik';
-import schema from '../schemas/index.js';
 import axios from 'axios';
 import { useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import schema from '../schemas/index.js';
 import useAuthContext from '../hooks/index.jsx';
 
 const Login = () => {
@@ -19,6 +20,8 @@ const Login = () => {
     onSubmit: async ({ username, password }, actions) => {
       try {
         const { data } = await axios.post('/api/v1/login', { username, password });
+
+        console.log(data);
 
         if (data.token) {
           localStorage.setItem('token', data.token);
