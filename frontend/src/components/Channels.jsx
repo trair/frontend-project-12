@@ -28,7 +28,7 @@ const Channels = () => {
           className='btn-channel'
           variant="light" 
           id={channel.id} 
-          active={currentChannelId == channel.id}
+          active={currentChannelId === channel.id}
           onClick={handleActiveChannel}
         >
         {`# ${channel.name}`}
