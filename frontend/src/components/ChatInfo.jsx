@@ -6,8 +6,6 @@ const ChatInfo = () => {
   const channel = channels.find((channel) => channel.id === currentChannelId);
 
   const countMessages = messages.filter(({ channelId }) => channelId === currentChannelId).length;
-  console.log(countMessages);
-  console.log(channel);
 
   return (
     <div className="bg-light mb-4 p-3 shadow-sm small">

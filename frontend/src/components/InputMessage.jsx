@@ -2,11 +2,12 @@ import { Form, InputGroup, Button } from 'react-bootstrap';
 import { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
-const InputMessage = ({ socket, username }) => {
+import useAuthContext from '../hooks/index.jsx';
+
+const InputMessage = ({ socket }) => {
   const [message, setMessage] = useState('');
-
   const channelId = useSelector((state) => state.channels.currentChannelId);
-
+  const useAuth = useAuthContext();
   const input = useRef();
 
   const handleSubmit = (e) => {
@@ -14,10 +15,13 @@ const InputMessage = ({ socket, username }) => {
     socket.emit('newMessage', { 
       body: message, 
       channelId,
-      username,
+      username: useAuth.data.username,
+    }, (responce) => {
+      if (responce.status === 'ok') {
+        setMessage('');
+        input.current.focus();
+      }
     });
-    setMessage('');
-    input.current.focus();
   };
 
   const handleMessage = (e) => {
