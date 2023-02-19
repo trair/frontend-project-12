@@ -8,7 +8,7 @@ import ChatInfo from "../components/ChatInfo.jsx";
 import Messages from "../components/Messages.jsx";
 import AddChannel from "../components/AddChannel";
 import { addMessage } from "../redux/slices/messagesSlice.js";
-import { addChannel } from "../redux/slices/channelsSlice.js";
+import { addChannel, deleteChannel } from "../redux/slices/channelsSlice.js";
 import { io } from "socket.io-client";
 
 const socket = io();
@@ -17,11 +17,6 @@ const Chat = () => {
   const dispatch = useDispatch();
   const { data }= useAuthContext();
 
-  useEffect(() => {
-    const { token } = data;
-    dispatch(fetchAuthorizationData(token))
-  }, [data, dispatch]);
-
   socket.on('newMessage', (payload) => {
     dispatch(addMessage(payload));
   });
@@ -29,6 +24,15 @@ const Chat = () => {
   socket.on('newChannel', (payload) => {
     dispatch(addChannel(payload));
   });
+
+  socket.on('removeChannel', (payload) => {
+    dispatch(deleteChannel(payload));
+  });
+
+  useEffect(() => {
+    const { token } = data;
+    dispatch(fetchAuthorizationData(token));
+  }, [data, dispatch]);
 
   return (
     <div className="container h-100 my-4 overflow-hidden rounded shadow">
@@ -39,7 +43,7 @@ const Chat = () => {
             <AddChannel socket={socket}/>
           </div>
           <ul className="nav flex-column nav-pills nav-fill px-2">
-            <Channels />
+            <Channels socket={socket}/>
           </ul>
         </div>
         <div className="col p-0 h-100">
