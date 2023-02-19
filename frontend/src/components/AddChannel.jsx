@@ -48,11 +48,12 @@ const AddChannel = ({ socket }) => {
           <Modal.Body>
             <Form.Group className="mb-3" >
               <Form.Control
-                className={ errors.channelName ? 'form-control is-invalid' : 'form-control' }
+                className={ errors.channelName ? 'form-control is-invalid' : '' }
                 id="channelName"
                 type="text"
                 value={values.channelName}
                 placeholder="Введите имя канала"
+                autoComplete="off"
                 autoFocus
                 onChange={handleChange}
               />
