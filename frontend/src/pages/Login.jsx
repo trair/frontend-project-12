@@ -13,8 +13,7 @@ const Login = () => {
   const inputUserName = useRef(null);
   const useAuth = useAuthContext();
 
-  const { values, handleChange, handleSubmit, errors, isSubmitting } =
-    useFormik({
+  const { values, handleChange, handleSubmit, errors, isSubmitting } = useFormik({
       initialValues: {
         username: '',
         password: '',
@@ -26,8 +25,6 @@ const Login = () => {
             username,
             password,
           });
-
-          console.log(data);
 
           if (data.token) {
             localStorage.setItem('token', data.token);
@@ -66,10 +63,7 @@ const Login = () => {
                     alt="Войти"
                   />
                 </div>
-                <form
-                  onSubmit={handleSubmit}
-                  className="col-12 col-md-6 mt-3 mt-mb-0"
-                >
+                <form onSubmit={handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0" >
                   <h1 className="text-center mb-4">Войти</h1>
                   <div className="form-floating mb-3">
                     <input
