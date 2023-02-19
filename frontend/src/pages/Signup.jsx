@@ -68,8 +68,7 @@ const Signup = () => {
                       trigger='focus'
                     >
                       <Form.Control
-                        className={errors.username && 'is-invalid'
-                        || errors.registration && 'is-invalid'}
+                        className={(errors.username && 'is-invalid') || (errors.registration && 'is-invalid')}
                         type="text"
                         placeholder="Имя пользователя"
                         value={values.username}
@@ -90,8 +89,7 @@ const Signup = () => {
                       trigger='focus'
                     >
                       <Form.Control
-                        className={errors.password && 'is-invalid'
-                        || errors.registration && 'is-invalid'}
+                        className={(errors.password && 'is-invalid') || (errors.registration && 'is-invalid')}
                         type="password"
                         placeholder="Пароль"
                         value={values.password}
@@ -111,8 +109,7 @@ const Signup = () => {
                       trigger='focus'
                     >
                       <Form.Control
-                        className={errors.confirmPassword && 'is-invalid' 
-                        || errors.registration && 'is-invalid'}
+                        className={(errors.confirmPassword && 'is-invalid')  || (errors.registration && 'is-invalid')}
                         type="password"
                         placeholder="Подтвердите пароль"
                         value={values.confirmPassword}

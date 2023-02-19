@@ -7,7 +7,7 @@ import { DeleteChannel } from "./DeleteChannel.jsx";
 import { RenameChannel } from "./RenameChannel.jsx";
 
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
+//import Dropdown from 'react-bootstrap/Dropdown';
 
 const Channels = ({ socket }) => {
   const { channels, currentChannelId } = useSelector((state) => state.channels);

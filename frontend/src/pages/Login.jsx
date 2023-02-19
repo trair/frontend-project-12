@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
 import axios from 'axios';
 import { useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import schema from '../schemas/index.js';
 import useAuthContext from '../hooks/index.jsx';
@@ -118,7 +118,7 @@ const Login = () => {
               <div className="card-footer p-4">
                 <div className="text-center">
                   <span>Нет аккаунта? </span>
-                  <a href="#" onClick={() => navigate('/signup')}>Регистрация</a>
+                  <Link to="/signup">Регистрация</Link>
                 </div>
               </div>
             </div>
