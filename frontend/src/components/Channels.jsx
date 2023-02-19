@@ -3,7 +3,8 @@ import { Button, ButtonGroup } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 
 import { changeChannel } from '../redux/slices/channelsSlice.js';
-import { DeleteChannel } from "./deleteChannel.jsx";
+import { DeleteChannel } from "./DeleteChannel.jsx";
+import { RenameChannel } from "./RenameChannel.jsx";
 
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -37,7 +38,7 @@ const Channels = ({ socket }) => {
         {channel.removable && 
         <DropdownButton as={ButtonGroup} title="" id="bg-nested-dropdown" variant="light">
           <DeleteChannel socket={socket} id={channel.id}/>
-          <Dropdown.Item eventKey="2">Переименовать</Dropdown.Item>
+          <RenameChannel socket={socket} id={channel.id}/>
         </DropdownButton>}
 
       </ButtonGroup>

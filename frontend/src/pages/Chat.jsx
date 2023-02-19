@@ -8,7 +8,7 @@ import ChatInfo from "../components/ChatInfo.jsx";
 import Messages from "../components/Messages.jsx";
 import AddChannel from "../components/AddChannel";
 import { addMessage } from "../redux/slices/messagesSlice.js";
-import { addChannel, deleteChannel } from "../redux/slices/channelsSlice.js";
+import { addChannel, deleteChannel, renameChannel } from "../redux/slices/channelsSlice.js";
 import { io } from "socket.io-client";
 
 const socket = io();
@@ -27,6 +27,10 @@ const Chat = () => {
 
   socket.on('removeChannel', (payload) => {
     dispatch(deleteChannel(payload));
+  });
+
+  socket.on('renameChannel', (payload) => {
+    dispatch(renameChannel(payload));
   });
 
   useEffect(() => {
