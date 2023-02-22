@@ -1,4 +1,4 @@
-export default {
+const ru = {
   translation: {
     chat: 'Чат',
     buttons: {
@@ -50,3 +50,5 @@ export default {
     messages: 'сообщений',
   },
 };
+
+export default ru;

@@ -1,4 +1,4 @@
-export default {
+const en = {
   translation: {
     chat: 'Chat',
     buttons: {
@@ -50,3 +50,5 @@ export default {
     messages: 'messages',
   },
 };
+
+export default en;
