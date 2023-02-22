@@ -6,10 +6,14 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Alert from 'react-bootstrap/Alert';
+
 import { useTranslation } from 'react-i18next';
 
 import { channelSchema } from '../schemas/index.js';
 import isExistsChannelName from '../utils/isExistsChannelName.js';
+
+//?
+import toastSuccess from '../toasts/index.js';
 
 const AddChannel = ({ socket }) => {
   const { t } = useTranslation();
@@ -30,6 +34,7 @@ const AddChannel = ({ socket }) => {
       if (isExistsChannelName(channels, channelName)) {
         actions.setFieldError('channelName', 'uniq');
       } else {
+        toastSuccess(t('toasts.add'));
         socket.emit('newChannel', { name: channelName });
         toggleModal();
       }
@@ -37,7 +42,7 @@ const AddChannel = ({ socket }) => {
   })
 
   return (
-    <>
+    <> 
       <Button variant="outline-success" size="sm" onClick={toggleModal}>
         +
       </Button>

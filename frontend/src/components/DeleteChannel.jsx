@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { toastWarning } from '../toasts/index.js';
 
 export const DeleteChannel = ({ socket, id }) => {
   const { t } = useTranslation();
@@ -16,6 +17,7 @@ export const DeleteChannel = ({ socket, id }) => {
 
     socket.emit('removeChannel', { id }, (response) => {
       if (response.status === 'ok') {
+        toastWarning(t('toasts.delete'));
         setSubmitting(false);
         toggleModal();
       }

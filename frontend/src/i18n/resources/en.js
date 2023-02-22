@@ -41,6 +41,11 @@ const en = {
       onlyNumAndLetters: 'Only letters and numbers',
       uniq: 'The channel name must be unique',
     },
+    toasts: {
+      add: 'The channel has been created',
+      rename: 'The channel has been renamed',
+      delete: 'The channel has been deleted',
+    },
     notFoundPage: 'Page not found',
     canGoTo: 'you can go to',
     linkToMain: 'main page',
