@@ -60,7 +60,7 @@ const Signup = () => {
                   />
                 </div>
 
-                <Form className="w-50" onSubmit={handleSubmit}>
+                <Form className="col-12 col-md-6" onSubmit={handleSubmit}>
                   <h1 className="text-center mb-4">{t('registration')}</h1>
                   <Form.Group className="form-floating mb-3" controlId="username" >
                     <OverlayTrigger
