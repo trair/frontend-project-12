@@ -12,8 +12,10 @@ import axios from 'axios';
 
 import schema from '../schemas/index.js';
 import useAuthContext from '../hooks/index.jsx';
+import { useTranslation } from 'react-i18next';
 
 const Login = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const inputUserName = useRef(null);
   const useAuth = useAuthContext();
@@ -67,7 +69,7 @@ const Login = () => {
                 </div>
 
                 <Form className="w-50" onSubmit={handleSubmit}>
-                  <h1 className="text-center mb-4">Войти</h1>
+                  <h1 className="text-center mb-4">{t('signIn')}</h1>
                   <Form.Group className="form-floating mb-3" controlId="username" >
                     <OverlayTrigger
                       placement="bottom-start"
@@ -78,7 +80,7 @@ const Login = () => {
                       <Form.Control
                         className={(errors.username && 'is-invalid') || (errors.authentication && 'is-invalid')}
                         type="text"
-                        placeholder="Ваш ник"
+                        placeholder={t('user.nickname')}
                         value={values.username}
                         onChange={handleChange}
                         required
@@ -87,7 +89,7 @@ const Login = () => {
                         ref={inputUserName}
                       />
                     </OverlayTrigger>
-                    <Form.Label>Ваш ник</Form.Label>
+                    <Form.Label>{t('user.nickname')}</Form.Label>
                   </Form.Group>
 
                   <Form.Group className="form-floating mb-3" controlId="password" >
@@ -100,14 +102,14 @@ const Login = () => {
                       <Form.Control
                         className={(errors.password && 'is-invalid') || (errors.authentication && 'is-invalid')}
                         type="password"
-                        placeholder="Пароль"
+                        placeholder={t('user.password')}
                         value={values.password}
                         onChange={handleChange}
                         required
                         autoComplete="off"
                       />
                     </OverlayTrigger>
-                    <Form.Label>Пароль</Form.Label>
+                    <Form.Label>{t('user.password')}</Form.Label>
                   </Form.Group>
 
                   <Button
@@ -116,15 +118,15 @@ const Login = () => {
                     type="submit"
                     disabled={!isValid || isSubmitting}
                   >
-                    Войти
+                    {t('buttons.logon')}
                   </Button>
                 </Form>
 
               </div>
               <div className="card-footer p-4">
                 <div className="text-center">
-                  <span>Нет аккаунта? </span>
-                  <Link to="/signup">Регистрация</Link>
+                  <span>{t('questions.haveAccount')} </span>
+                  <Link to="/signup">{t('registration')}</Link>
                 </div>
               </div>
             </div>

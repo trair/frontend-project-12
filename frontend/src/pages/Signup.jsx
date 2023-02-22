@@ -11,8 +11,10 @@ import { useFormik } from 'formik';
 import { registartionSchema } from '../schemas/index.js';
 
 import Nav from '../components/Nav';
+import { useTranslation } from 'react-i18next';
 
 const Signup = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const useAuth = useAuthContext();
 
@@ -59,7 +61,7 @@ const Signup = () => {
                 </div>
 
                 <Form className="w-50" onSubmit={handleSubmit}>
-                  <h1 className="text-center mb-4">Регистрация</h1>
+                  <h1 className="text-center mb-4">{t('registration')}</h1>
                   <Form.Group className="form-floating mb-3" controlId="username" >
                     <OverlayTrigger
                       placement="bottom-start"
@@ -70,7 +72,7 @@ const Signup = () => {
                       <Form.Control
                         className={(errors.username && 'is-invalid') || (errors.registration && 'is-invalid')}
                         type="text"
-                        placeholder="Имя пользователя"
+                        placeholder={t('user.username')}
                         value={values.username}
                         onChange={handleChange}
                         required
@@ -78,7 +80,7 @@ const Signup = () => {
                         autoFocus
                       />
                     </OverlayTrigger>
-                    <Form.Label>Имя пользователя</Form.Label>
+                    <Form.Label>{t('user.username')}</Form.Label>
                   </Form.Group>
 
                   <Form.Group className="form-floating mb-3" controlId="password" >
@@ -91,14 +93,14 @@ const Signup = () => {
                       <Form.Control
                         className={(errors.password && 'is-invalid') || (errors.registration && 'is-invalid')}
                         type="password"
-                        placeholder="Пароль"
+                        placeholder={t('user.password')}s
                         value={values.password}
                         onChange={handleChange}
                         required
                         autoComplete="off"
                       />
                     </OverlayTrigger>
-                    <Form.Label>Пароль</Form.Label>
+                    <Form.Label>{t('user.password')}</Form.Label>
                   </Form.Group>
 
                   <Form.Group className="form-floating mb-3" controlId="confirmPassword" >
@@ -111,14 +113,14 @@ const Signup = () => {
                       <Form.Control
                         className={(errors.confirmPassword && 'is-invalid')  || (errors.registration && 'is-invalid')}
                         type="password"
-                        placeholder="Подтвердите пароль"
+                        placeholder={t('user.confirmPassword')}
                         value={values.confirmPassword}
                         onChange={handleChange}
                         required
                         autoComplete="off"
                       />
                      </OverlayTrigger>
-                    <Form.Label>Подтвердите пароль</Form.Label>
+                    <Form.Label>{t('user.confirmPassword')}</Form.Label>
                   </Form.Group>
                   <Button
                     className="w-100"
@@ -126,7 +128,7 @@ const Signup = () => {
                     type="submit"
                     disabled={!isValid}
                   >
-                    Зарегистрироваться
+                    {t('buttons.registration')}
                   </Button>
                 </Form>
 
