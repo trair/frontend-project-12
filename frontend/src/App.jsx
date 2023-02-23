@@ -1,24 +1,59 @@
-import React from 'react';
-import { Provider, ErrorBoundary } from '@rollbar/react'; // Provider imports 'rollbar'
+import { useState } from 'react';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
-const rollbarConfig = {
-  accessToken: '113424b128674b0ab5c9f4d2b7c09934',
-  environment: 'testenv',
+import Chat from './pages/Chat';
+import Login from './pages/Login';
+import NotFoundPage from './pages/notFoundPage';
+import Signup from './pages/Signup';
+
+import Context from './context/index.jsx';
+import useAuthContext from './hooks/index.jsx';
+
+import { io } from 'socket.io-client';
+
+const MainProvider = ({ children }) => {
+  const [userData, setUserData] = useState({ 
+    token: localStorage.getItem('token'), 
+    username: localStorage.getItem('username'),
+  });
+
+  return (
+    <Context.Provider value={{ data: userData, setUserData }}>
+      {children}
+    </Context.Provider>
+  );
 };
 
-function TestError() {
-  const a = null;
-  return a.hello();
-}
+const PrivateRoute = ({ children }) => {
+  const authContext = useAuthContext();
 
-// Provider instantiates Rollbar client instance handling any uncaught errors or unhandled promises in the browser
-// ErrorBoundary catches all React errors in the tree below and logs them to Rollbar
-export default function App() {
+  const { token } = authContext.data;
+  return token ? children : <Navigate to="/login" />;
+};
+
+const socket = io();
+
+const App = () => {
+
   return (
-    <Provider config={rollbarConfig}>
-      <ErrorBoundary>
-        <TestError />
-      </ErrorBoundary>
-    </Provider>
+    <MainProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <Chat socket={socket}/>
+              </PrivateRoute>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </BrowserRouter>
+    </MainProvider>
   );
-}
+};
+
+export default App;
