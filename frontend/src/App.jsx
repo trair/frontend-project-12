@@ -1,59 +1,24 @@
-import { useState } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import React from 'react';
+import { Provider, ErrorBoundary } from '@rollbar/react'; // Provider imports 'rollbar'
 
-import Chat from './pages/Chat';
-import Login from './pages/Login';
-import NotFoundPage from './pages/notFoundPage';
-import Signup from './pages/Signup';
+const rollbarConfig = {
+  accessToken: '113424b128674b0ab5c9f4d2b7c09934',
+  environment: 'testenv',
+};
 
-import Context from './context/index.jsx';
-import useAuthContext from './hooks/index.jsx';
+function TestError() {
+  const a = null;
+  return a.hello();
+}
 
-import { io } from 'socket.io-client';
-
-const MainProvider = ({ children }) => {
-  const [userData, setUserData] = useState({ 
-    token: localStorage.getItem('token'), 
-    username: localStorage.getItem('username'),
-  });
-
+// Provider instantiates Rollbar client instance handling any uncaught errors or unhandled promises in the browser
+// ErrorBoundary catches all React errors in the tree below and logs them to Rollbar
+export default function App() {
   return (
-    <Context.Provider value={{ data: userData, setUserData }}>
-      {children}
-    </Context.Provider>
+    <Provider config={rollbarConfig}>
+      <ErrorBoundary>
+        <TestError />
+      </ErrorBoundary>
+    </Provider>
   );
-};
-
-const PrivateRoute = ({ children }) => {
-  const authContext = useAuthContext();
-
-  const { token } = authContext.data;
-  return token ? children : <Navigate to="/login" />;
-};
-
-const socket = io();
-
-const App = () => {
-
-  return (
-    <MainProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <PrivateRoute>
-                <Chat socket={socket}/>
-              </PrivateRoute>
-            }
-          />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </BrowserRouter>
-    </MainProvider>
-  );
-};
-
-export default App;
+}
