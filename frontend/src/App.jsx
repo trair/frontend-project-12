@@ -9,7 +9,7 @@ import Signup from './pages/Signup';
 import Context from './context/index.jsx';
 import useAuthContext from './hooks/index.jsx';
 
-import { io } from "socket.io-client";
+import { io } from 'socket.io-client';
 
 const MainProvider = ({ children }) => {
   const [userData, setUserData] = useState({ 
