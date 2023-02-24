@@ -15,6 +15,8 @@ import isExistsChannelName from '../utils/isExistsChannelName.js';
 //?
 import toastSuccess from '../toasts/index.js';
 
+import unlockElementWithDelay from '../utils/unlockElementWithDelay.js';
+
 const AddChannel = ({ socket }) => {
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState();
