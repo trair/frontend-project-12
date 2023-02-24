@@ -16,10 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { addMessage } from "../redux/slices/messagesSlice.js";
 import { addChannel, deleteChannel, renameChannel } from "../redux/slices/channelsSlice.js";
 
-//?
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 
 const Chat = ({ socket }) => {
   const { t } = useTranslation();

@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-const toastSucces = (text) => toast.success(text, {
+const toastSuccess = (text) => toast.success(text, {
   position: "top-right",
   autoClose: 5000,
   hideProgressBar: false,
@@ -33,5 +33,15 @@ export const toastWarning = (text) => toast.warn(text, {
   theme: "light",
 });
 
+export const toastError = (text) => toast.error(text, {
+  position: "top-right",
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "light",
+  });
 
-export default toastSucces;
+export default toastSuccess;
