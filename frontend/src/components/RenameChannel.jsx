@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
 
@@ -14,6 +14,8 @@ import { useTranslation } from 'react-i18next';
 import isExistsChannelName from '../utils/isExistsChannelName.js';
 import { toastInfo } from '../toasts/index.js';
 
+import unlockElementWithDelay from '../utils/unlockElementWithDelay.js';
+
 export const RenameChannel = ({ socket, id }) => {
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
@@ -24,7 +26,7 @@ export const RenameChannel = ({ socket, id }) => {
     return setShowModal(!showModal);
   }
 
-  const { values, handleChange, handleSubmit, errors, isValid, resetForm } = useFormik({
+  const { values, handleChange, handleSubmit, errors, isValid, resetForm, isSubmitting, setSubmitting } = useFormik({
     initialValues: {
       channelName: '',
     },
@@ -33,12 +35,22 @@ export const RenameChannel = ({ socket, id }) => {
       if (isExistsChannelName(channels, channelName)) {
         actions.setFieldError('channelName','uniq');
       } else {
-        toastInfo(t('toasts.rename'));
-        socket.emit('renameChannel', { id, name: channelName });
-        toggleModal();
+        socket.emit('renameChannel', { id, name: channelName }, ({ status }) => {
+          if (status) {
+            toggleModal();
+            toastInfo(t('toasts.rename'));
+          }
+        });
       }
     },
   });
+
+  useEffect(() => {
+    if (isSubmitting) {
+      const toggle = unlockElementWithDelay(setSubmitting, 3000);
+      toggle(false);
+    }
+  }, [isSubmitting, setSubmitting]);
 
   return (
     <>
@@ -66,10 +78,10 @@ export const RenameChannel = ({ socket, id }) => {
             <Alert show={!!errors.channelName} variant="danger">{errors.channelName && t(`errors.${errors.channelName}`)}</Alert>
           </Modal.Body>
           <Modal.Footer>
-            <Button type="button" variant="secondary" onClick={toggleModal}>
+            <Button type="button" variant="secondary" onClick={toggleModal} disabled={isSubmitting}>
             {t('buttons.cancel')}
             </Button>
-            <Button type="submit" variant="danger" disabled={!isValid}>
+            <Button type="submit" variant="danger" disabled={!isValid || isSubmitting}>
             {t('buttons.rename')}
             </Button>
           </Modal.Footer>
