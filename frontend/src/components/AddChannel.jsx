@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
 
@@ -25,7 +25,7 @@ const AddChannel = ({ socket }) => {
     return setShowModal(!showModal);
   }
 
-  const { values, handleChange, handleSubmit, errors, isValid, resetForm } = useFormik({
+  const { values, handleChange, handleSubmit, errors, isValid, resetForm, isSubmitting, setSubmitting } = useFormik({
     initialValues: {
       channelName: '',
     },
@@ -34,12 +34,22 @@ const AddChannel = ({ socket }) => {
       if (isExistsChannelName(channels, channelName)) {
         actions.setFieldError('channelName', 'uniq');
       } else {
-        toastSuccess(t('toasts.add'));
-        socket.emit('newChannel', { name: channelName });
-        toggleModal();
+        socket.emit('newChannel', { name: channelName }, ({ status }) => {
+          if (status) {
+            toggleModal();
+            toastSuccess(t('toasts.add'));
+          }
+        });
       }
     }
-  })
+  });
+
+  useEffect(() => {
+    if (isSubmitting) {
+      const toggle = unlockElementWithDelay(setSubmitting, 3000);
+      toggle(false);
+    }
+  }, [isSubmitting, setSubmitting]);
 
   return (
     <> 
@@ -62,6 +72,7 @@ const AddChannel = ({ socket }) => {
                 autoComplete="off"
                 autoFocus
                 onChange={handleChange}
+                disabled={isSubmitting}
                 />
             </Form.Group>
             <Alert show={ !!errors.channelName } variant='danger'>{errors.channelName && t(`errors.${errors.channelName}`)}</Alert>
@@ -70,7 +81,7 @@ const AddChannel = ({ socket }) => {
             <Button type="button" variant="secondary" onClick={toggleModal}>
             {t('buttons.cancel')}
             </Button>
-            <Button type="submit" variant="success" disabled={!isValid}>
+            <Button type="submit" variant="success" disabled={!isValid || isSubmitting}>
             {t('buttons.add')}
             </Button>
           </Modal.Footer>
