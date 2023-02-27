@@ -1,7 +1,7 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
-
-import Nav from '../components/Nav';
 import { useTranslation } from 'react-i18next';
+import Nav from '../components/Nav';
 
 const NotFoundPage = () => {
   const { t } = useTranslation();
@@ -16,7 +16,9 @@ const NotFoundPage = () => {
         />
         <h1 className="h4 text-muted">{t('notFoundPage')}</h1>
         <p className="text-muted">
-        {t('canGoTo')} <Link to="/">{t('linkToMain')}</Link>
+          {t('canGoTo')}
+          {' '}
+          <Link to="/">{t('linkToMain')}</Link>
         </p>
       </div>
     </>

@@ -31,5 +31,5 @@ root.render(
         </I18nextProvider>
       </ErrorBoundary>
     </RollbarProvider>
-  </Provider>
+  </Provider>,
 );

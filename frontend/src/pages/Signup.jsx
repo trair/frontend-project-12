@@ -1,3 +1,4 @@
+import React from 'react';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -5,15 +6,14 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
 import { useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
+import { useRollbar } from '@rollbar/react';
 import useAuthContext from '../hooks/index.jsx';
 
-import { useFormik } from 'formik';
 import { registartionSchema } from '../schemas/index.js';
 
 import Nav from '../components/Nav';
-import { useTranslation } from 'react-i18next';
-
-import { useRollbar } from '@rollbar/react';
 
 const Signup = () => {
   const rollbar = useRollbar();
@@ -21,14 +21,16 @@ const Signup = () => {
   const navigate = useNavigate();
   const useAuth = useAuthContext();
 
-  const { values, handleChange, handleSubmit, errors, handleBlur, touched } = useFormik({
+  const {
+    values, handleChange, handleSubmit, errors, handleBlur, touched,
+  } = useFormik({
     initialValues: {
       username: '',
       password: '',
       confirmPassword: '',
     },
     validationSchema: registartionSchema,
-    onSubmit: async ({ username, password }, actions ) => {
+    onSubmit: async ({ username, password }, actions) => {
       try {
         const { data } = await axios.post('/api/v1/signup', { username, password });
 
@@ -66,15 +68,15 @@ const Signup = () => {
 
                 <Form className="col-12 col-md-6" onSubmit={handleSubmit}>
                   <h1 className="text-center mb-4">{t('registration')}</h1>
-                  <Form.Group className="form-floating mb-3" controlId="username" >
+                  <Form.Group className="form-floating mb-3" controlId="username">
                     <OverlayTrigger
                       placement="bottom-start"
-                      overlay={<Tooltip className="custom-tooltip tooltip" >{errors.username && t(`errors.${errors.username}`)}</Tooltip>}
+                      overlay={<Tooltip className="custom-tooltip tooltip">{errors.username && t(`errors.${errors.username}`)}</Tooltip>}
                       show={!!touched.username && errors.username}
-                      trigger='focus'
+                      trigger="focus"
                     >
                       <Form.Control
-                        className={(errors.username && 'is-invalid') || (errors.registration && 'is-invalid')}
+                        className={!!touched.username && ((errors.username && 'is-invalid') || (errors.registration && 'is-invalid'))}
                         type="text"
                         placeholder={t('user.username')}
                         value={values.username}
@@ -88,17 +90,17 @@ const Signup = () => {
                     <Form.Label>{t('user.username')}</Form.Label>
                   </Form.Group>
 
-                  <Form.Group className="form-floating mb-3" controlId="password" >
+                  <Form.Group className="form-floating mb-3" controlId="password">
                     <OverlayTrigger
                       placement="bottom-start"
-                      overlay={<Tooltip className="custom-tooltip tooltip" >{errors.password && t(`errors.${errors.password}`)}</Tooltip>}
+                      overlay={<Tooltip className="custom-tooltip tooltip">{errors.password && t(`errors.${errors.password}`)}</Tooltip>}
                       show={!!touched.password && errors.password}
-                      trigger='focus'
+                      trigger="focus"
                     >
                       <Form.Control
                         className={!!touched.password && ((errors.password && 'is-invalid') || (errors.registration && 'is-invalid'))}
                         type="password"
-                        placeholder={t('user.password')}s
+                        placeholder={t('user.password')}
                         value={values.password}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -109,12 +111,17 @@ const Signup = () => {
                     <Form.Label>{t('user.password')}</Form.Label>
                   </Form.Group>
 
-                  <Form.Group className="form-floating mb-3" controlId="confirmPassword" >
+                  <Form.Group className="form-floating mb-3" controlId="confirmPassword">
                     <OverlayTrigger
                       placement="bottom-start"
-                      overlay={<Tooltip className="custom-tooltip tooltip" >{(errors.confirmPassword && t(`errors.${errors.confirmPassword}`)) || (errors.registration && t(`errors.${errors.registration}`))}</Tooltip>}
+                      overlay={(
+                        <Tooltip className="custom-tooltip tooltip">
+                          {(errors.confirmPassword && t(`errors.${errors.confirmPassword}`)) || (errors.registration && t(`errors.${errors.registration}`))}
+                        </Tooltip>
+                        )}
+                      // eslint-disable-next-line max-len
                       show={!!touched.confirmPassword && (errors.confirmPassword || errors.registration)}
-                      trigger='focus'
+                      trigger="focus"
                     >
                       <Form.Control
                         className={!!touched.confirmPassword && ((errors.confirmPassword && 'is-invalid') || (errors.registration && 'is-invalid'))}
@@ -126,7 +133,7 @@ const Signup = () => {
                         autoComplete="off"
                         required
                       />
-                     </OverlayTrigger>
+                    </OverlayTrigger>
                     <Form.Label>{t('user.confirmPassword')}</Form.Label>
                   </Form.Group>
                   <Button
