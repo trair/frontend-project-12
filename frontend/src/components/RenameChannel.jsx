@@ -7,13 +7,13 @@ import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import { Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { channelSchema } from '../../../schemas/index.js';
-import { useSocketContext } from '../../../context/index.js';
-import isExistsChannelName from '../../../utils/isExistsChannelName.js';
-import { channelsSelector } from '../../../redux/slices/channelsSlice.js';
-import { toastInfo } from '../../toasts/index.js';
+import { channelSchema } from './schemas/index.js';
+import { useSocketContext } from './context/index.js';
+import isExistsChannelName from './utils/isExistsChannelName.js';
+import { channelsSelector } from './redux/slices/channelsSlice.js';
+import { toastInfo } from './toasts/index.js';
 
-import unlockElementWithDelay from '../../../utils/unlockElementWithDelay.js';
+import unlockElementWithDelay from './utils/unlockElementWithDelay.js';
 
 const RenameChannel = ({ id }) => {
   const { t } = useTranslation();

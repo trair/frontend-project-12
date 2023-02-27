@@ -8,9 +8,9 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
-import { useAuthContext } from '../../context/index.js';
-import { registartionSchema } from '../../schemas/index.js';
-import Nav from '../Nav';
+import { useAuthContext } from './context/index.js';
+import { registartionSchema } from './schemas/index.js';
+import Nav from './components/Nav.jsx';
 
 const Signup = () => {
   const rollbar = useRollbar();
