@@ -47,6 +47,10 @@ const en = {
       rename: 'The channel has been renamed',
       delete: 'The channel has been deleted',
     },
+    message: {
+      message_one: '{{count}} message',
+      message_other: '{{count}} messages',
+    },
     notFoundPage: 'Page not found',
     canGoTo: 'you can go to',
     linkToMain: 'main page',
@@ -54,7 +58,6 @@ const en = {
     logIn: 'Log in',
     registration: 'Registration',
     typeMessage: 'Type your message here',
-    messages: 'messages',
   },
 };
 

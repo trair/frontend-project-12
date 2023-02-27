@@ -47,6 +47,11 @@ const ru = {
       rename: 'Канал переименован',
       delete: 'Канал удалён',
     },
+    message: {
+      message_one: '{{count}} сообщение',
+      message_few: '{{count}} сообщения',
+      message_many: '{{count}} сообщений',
+    },
     notFoundPage: 'Страница не найдена',
     canGoTo: 'Но вы можете перейти',
     linkToMain: 'на главную страницу',
@@ -54,7 +59,6 @@ const ru = {
     logIn: 'Войти в систему',
     registration: 'Регистрация',
     typeMessage: 'Введите сообщение',
-    messages: 'сообщений',
   },
 };
 
