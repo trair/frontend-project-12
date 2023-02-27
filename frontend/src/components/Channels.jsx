@@ -28,7 +28,7 @@ const Channels = ({ socket }) => {
           className='br-0 btn-channel text-truncate text-start br-0"'
           variant="light" 
           id={channel.id}
-          active={currentChannelId == channel.id}
+          active={currentChannelId === channel.id}
           onClick={handleActiveChannel}
           >
             <span className="me-1">#</span>{channel.name}
