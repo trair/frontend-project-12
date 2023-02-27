@@ -1,8 +1,8 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { messagesSelector } from './redux/slices/messagesSlice.js';
-import { channelIdSelector } from './redux/slices/channelsSlice.js';
+import { messagesSelector } from '../redux/slices/messagesSlice.js';
+import { channelIdSelector } from '../redux/slices/channelsSlice.js';
 
 const Messages = () => {
   const currentChannelID = useSelector(channelIdSelector);

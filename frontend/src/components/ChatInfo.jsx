@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { channelsSelector, channelIdSelector } from './redux/slices/channelsSlice.js';
-import { messagesSelector } from './redux/slices/messagesSlice.js';
+import { channelsSelector, channelIdSelector } from '../redux/slices/channelsSlice.js';
+import { messagesSelector } from '../redux/slices/messagesSlice.js';
 
 const ChatInfo = () => {
   const { t } = useTranslation();

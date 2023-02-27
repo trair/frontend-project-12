@@ -4,13 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
 import { useAuthContext } from '../context/index.js';
 import fetchAuthorizationData from '../redux/thunk.js';
-import InputMessages from './components/InputMessage';
-import Channels from './components/Channels.jsx';
-import ChatInfo from './components/ChatInfo.jsx';
-import Messages from './components/Messages.jsx';
-import AddChannel from './components/AddChannel';
+import InputMessages from '../components/InputMessage';
+import Channels from '../components/Channels.jsx';
+import ChatInfo from '../components/ChatInfo.jsx';
+import Messages from '../components/Messages.jsx';
+import AddChannel from '../components/AddChannel';
 
-import Nav from './components/Nav.jsx';
+import Nav from '../components/Nav.jsx';
 
 const Chat = () => {
   const { t } = useTranslation();
