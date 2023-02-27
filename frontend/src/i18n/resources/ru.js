@@ -25,8 +25,9 @@ const ru = {
       delete: 'Удалить канал',
     },
     questions: {
-      areYouSure: 'Вы уверены ?',
-      haveAccount: 'Нет аккаунта?',
+      areYouSure: 'Вы уверены?',
+      noAccount: 'Нет аккаунта?',
+      haveAccount: 'Есть аккаунт?',
     },
     errors: {
       required: 'Пожалуйста, заполните это поле',
@@ -50,6 +51,7 @@ const ru = {
     canGoTo: 'Но вы можете перейти',
     linkToMain: 'на главную страницу',
     signIn: 'Войти',
+    logIn: 'Войти в систему',
     registration: 'Регистрация',
     typeMessage: 'Введите сообщение',
     messages: 'сообщений',
