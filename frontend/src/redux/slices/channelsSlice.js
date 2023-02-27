@@ -2,8 +2,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import fetchAuthorizationData from '../thunk.js';
 
-const findIndex = (channels, id) => channels.findIndex((channel) => channel.id === id);
-
 const channelsSlice = createSlice({
   name: 'channels',
   initialState: { channels: [], currentChannelId: 1 },
@@ -16,16 +14,17 @@ const channelsSlice = createSlice({
       state.currentChannelId = payload.id;
     },
     deleteChannel: (state, { payload }) => {
-      const index = findIndex(state.channels, payload.id);
+      const index = state.channels.findIndex(({ id }) => id === payload.id);
+      const { id: idToBeDeletedChannel } = state.channels[index];
 
-      if (index === state.currentChannelId) {
+      if (idToBeDeletedChannel === state.currentChannelId) {
         state.currentChannelId = 1;
       }
 
       state.channels.splice(index, 1);
     },
     renameChannel: (state, { payload }) => {
-      const index = findIndex(state.channels, payload.id);
+      const index = state.channels.findIndex(({ id }) => id === payload.id);
       state.channels[index].name = payload.name;
     },
   },
@@ -37,7 +36,12 @@ const channelsSlice = createSlice({
   },
 });
 
+export const channelIdSelector = (state) => state.channels.currentChannelId;
+export const channelsSelector = (state) => state.channels.channels;
 export const {
-  changeChannel, addChannel, deleteChannel, renameChannel,
+  changeChannel,
+  addChannel,
+  deleteChannel,
+  renameChannel,
 } = channelsSlice.actions;
 export default channelsSlice.reducer;

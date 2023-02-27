@@ -1,23 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-
 import Dropdown from 'react-bootstrap/Dropdown';
-import { changeChannel } from '../redux/slices/channelsSlice.js';
+import { changeChannel, channelsSelector, channelIdSelector } from '../../../redux/slices/channelsSlice.js';
 import DeleteChannel from './DeleteChannel.jsx';
 import RenameChannel from './RenameChannel.jsx';
 
-const Channels = ({ socket }) => {
-  const { channels, currentChannelId } = useSelector((state) => state.channels);
+const Channels = () => {
+  const channels = useSelector(channelsSelector);
+  const currentChannelId = useSelector(channelIdSelector);
   const dispatch = useDispatch();
 
   const handleActiveChannel = (e) => {
     dispatch(changeChannel(Number(e.target.id)));
   };
-
-  useEffect(() => {
-    dispatch(changeChannel(currentChannelId));
-  }, [dispatch, currentChannelId]);
 
   return (
     channels.map((channel, index) => (
@@ -43,8 +39,8 @@ const Channels = ({ socket }) => {
         )}
 
           <Dropdown.Menu>
-            <DeleteChannel socket={socket} id={channel.id} />
-            <RenameChannel socket={socket} id={channel.id} />
+            <DeleteChannel id={channel.id} />
+            <RenameChannel id={channel.id} />
           </Dropdown.Menu>
         </Dropdown>
       </li>

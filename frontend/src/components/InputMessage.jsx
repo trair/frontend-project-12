@@ -1,45 +1,41 @@
 import { Form, InputGroup, Button } from 'react-bootstrap';
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-
 import { useTranslation } from 'react-i18next';
-
 import filter from 'leo-profanity';
-import useAuthContext from '../hooks/index.jsx';
+import { channelIdSelector } from '../../../redux/slices/channelsSlice.js';
+import { useSocketContext, useAuthContext } from '../../../context/index.js';
+import unlockElementWithDelay from '../../../utils/unlockElementWithDelay.js';
 
-import unlockElementWithDelay from '../utils/unlockElementWithDelay.js';
-
-const InputMessage = ({ socket }) => {
+const InputMessage = () => {
   const { t } = useTranslation();
   const [message, setMessage] = useState('');
   const [isSend, setSend] = useState(false);
-
-  const channelId = useSelector((state) => state.channels.currentChannelId);
+  const channelId = useSelector(channelIdSelector);
+  const { addNewMessage } = useSocketContext();
   const useAuth = useAuthContext();
   const input = useRef();
+
+  const { username } = useAuth.data;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setSend(true);
 
-    socket.emit('newMessage', {
-      body: filter.clean(message),
-      channelId,
-      username: useAuth.data.username,
-    }, ({ status }) => {
-      if (status) {
-        setMessage('');
-        setSend(false);
-      }
-    });
+    const resolve = () => {
+      setMessage('');
+      setSend(false);
+    };
+
+    const body = filter.clean(message);
+    const props = { body, channelId, username };
+    addNewMessage(props, resolve);
   };
 
   const handleMessage = (e) => {
     const text = e.target.value;
     setMessage(text);
   };
-
-  console.log(channelId);
 
   useEffect(() => {
     if (isSend) {
