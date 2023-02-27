@@ -4,16 +4,13 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
-
 import { useNavigate, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
-import useAuthContext from '../hooks/index.jsx';
-
-import { registartionSchema } from '../schemas/index.js';
-
-import Nav from '../components/Nav';
+import { useAuthContext } from '../../context/index.js';
+import { registartionSchema } from '../../schemas/index.js';
+import Nav from '../Nav';
 
 const Signup = () => {
   const rollbar = useRollbar();
@@ -35,8 +32,8 @@ const Signup = () => {
         const { data } = await axios.post('/api/v1/signup', { username, password });
 
         if (data.token) {
-          localStorage.setItem('token', data.token);
-          localStorage.setItem('username', data.username);
+          const user = { token: data.token, username: data.username };
+          localStorage.setItem('user', JSON.stringify(user));
           useAuth.setUserData(data);
 
           navigate('/');

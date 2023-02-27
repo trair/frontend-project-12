@@ -1,26 +1,18 @@
 import React, { useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
-
 import { useFormik } from 'formik';
 import axios from 'axios';
-
-// import schema from '../schemas/index.js';
-
 import { useTranslation } from 'react-i18next';
-
 import { useRollbar } from '@rollbar/react';
-
 import { ToastContainer } from 'react-toastify';
 import { toastError } from '../toasts/index.js';
-
-import useAuthContext from '../hooks/index.jsx';
-import LanguageSwitcher from '../components/LanguageSwitcher';
-import Nav from '../components/Nav';
+import { useAuthContext } from '../../context/index.js';
+import LanguageSwitcher from '../LanguageSwitcher';
+import Nav from '../Nav';
 
 const Login = () => {
   const rollbar = useRollbar();
@@ -36,7 +28,6 @@ const Login = () => {
       username: '',
       password: '',
     },
-    /* validationSchema: schema, */
     onSubmit: async ({ username, password }, actions) => {
       try {
         const { data } = await axios.post('/api/v1/login', {
@@ -45,8 +36,8 @@ const Login = () => {
         });
 
         if (data.token) {
-          localStorage.setItem('token', data.token);
-          localStorage.setItem('username', data.username);
+          const user = { token: data.token, username: data.username };
+          localStorage.setItem('user', JSON.stringify(user));
           useAuth.setUserData(data);
 
           navigate('/');
@@ -67,7 +58,7 @@ const Login = () => {
 
   useEffect(() => {
     inputUserName.current.focus();
-  }, [errors.authentication]);
+  }, [errors.authentication, useAuth.data, navigate]);
 
   return (
     <>
