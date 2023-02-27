@@ -2,12 +2,12 @@ import React, { useState, useMemo } from 'react';
 import {
   BrowserRouter, Navigate, Route, Routes,
 } from 'react-router-dom';
-import Chat from '../pages/Chat';
-import Login from '../pages/Login';
-import NotFoundPage from '../pages/notFoundPage';
-import Signup from '../pages/Signup';
+import Chat from './pages/Chat';
+import Login from './pages/Login';
+import NotFoundPage from './pages/notFoundPage';
+import Signup from './pages/Signup';
 
-import Context, { useAuthContext } from '../context/index.js';
+import Context, { useAuthContext } from './context/index.js';
 
 const PrivateRoute = ({ children }) => {
   const authContext = useAuthContext();
