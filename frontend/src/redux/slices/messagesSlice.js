@@ -12,16 +12,10 @@ const messagesSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(fetchAuthorizationData.fulfilled, (state, { payload }) => payload.messages);
-    builder
-      .addCase(deleteChannel, (state, { payload }) => {
-        const filtered = state.filter(({ channelId }) => channelId !== payload.id);
-        return filtered;
-      });
+    builder.addCase(fetchAuthorizationData.fulfilled, (state, { payload }) => payload.messages),
+    builder.addCase(deleteChannel, (state, { payload }) => state.filter(({ channelId }) => channelId !== payload.id));
   },
 });
 
-export const messagesSelector = (state) => state.messages;
 export const { addMessage } = messagesSlice.actions;
 export default messagesSlice.reducer;
