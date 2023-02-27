@@ -38,7 +38,6 @@ const en = {
       validPassword: 'Only Latin letters, numbers and special characters (@,$,!,%,*,#,?,&)',
       match: 'Passwords must be the same',
       exists: 'This user already exists',
-      onlyNumAndLetters: 'Only letters and numbers',
       uniq: 'The channel name must be unique',
       network: 'Netwok error',
     },
