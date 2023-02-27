@@ -24,7 +24,6 @@ const Channels = ({ socket }) => {
   return (
     channels.map((channel, index) => (
       <ButtonGroup className="w-100" key={index}>
-
         <Button
           className='btn-channel text-truncate text-start'
           variant="light" 
@@ -39,8 +38,8 @@ const Channels = ({ socket }) => {
         <DropdownButton as={ButtonGroup} title="" id="bg-nested-dropdown" variant="light">
           <DeleteChannel socket={socket} id={channel.id}/>
           <RenameChannel socket={socket} id={channel.id}/>
+          <span className="visually-hidden">Управление каналом</span>
         </DropdownButton>}
-
       </ButtonGroup>
     ))
   );
