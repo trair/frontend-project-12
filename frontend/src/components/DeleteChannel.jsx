@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { Dropdown } from 'react-bootstrap';
+
 import { useTranslation } from 'react-i18next';
+
 import { toastWarning } from '../toasts/index.js';
 
 import unlockElementWithDelay from '../utils/unlockElementWithDelay.js';
 
-export const DeleteChannel = ({ socket, id }) => {
+const DeleteChannel = ({ socket, id }) => {
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
@@ -31,13 +33,13 @@ export const DeleteChannel = ({ socket, id }) => {
       const toggle = unlockElementWithDelay(setSubmitting, 3000);
       toggle(false);
     }
-  }, [isSubmitting])
+  }, [isSubmitting]);
 
   return (
     <>
-    <Dropdown.Item eventKey="1" onClick={toggleModal}>
-    {t('buttons.delete')}
-    </Dropdown.Item>
+      <Dropdown.Item eventKey="1" onClick={toggleModal}>
+        {t('buttons.delete')}
+      </Dropdown.Item>
 
       <Modal show={showModal} onHide={toggleModal} centered>
         <Modal.Header closeButton>
@@ -46,13 +48,15 @@ export const DeleteChannel = ({ socket, id }) => {
         <Modal.Body>{t('questions.areYouSure')}</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={toggleModal} disabled={isSubmitting}>
-          {t('buttons.cancel')}
+            {t('buttons.cancel')}
           </Button>
           <Button variant="danger" onClick={deleteChannel} disabled={isSubmitting}>
-          {t('buttons.delete')}
+            {t('buttons.delete')}
           </Button>
         </Modal.Footer>
       </Modal>
     </>
   );
-}
+};
+
+export default DeleteChannel;
