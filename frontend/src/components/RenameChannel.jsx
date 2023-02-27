@@ -13,7 +13,7 @@ import isExistsChannelName from '../utils/isExistsChannelName.js';
 import { channelsSelector } from '../redux/slices/channelsSlice.js';
 import { toastInfo } from '../toasts/index.js';
 
-import unlockElementWithDelay from './utils/unlockElementWithDelay.js';
+import unlockElementWithDelay from '../utils/unlockElementWithDelay.js';
 
 const RenameChannel = ({ id }) => {
   const { t } = useTranslation();
