@@ -59,6 +59,7 @@ const ru = {
     logIn: 'Войти в систему',
     registration: 'Регистрация',
     typeMessage: 'Введите сообщение',
+    loading: 'Идёт загрузка',
   },
 };
 
