@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -8,9 +8,9 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
-import { useAuthContext } from '../context/index.js';
-import { registartionSchema } from '../schemas/index.js';
-import Nav from '../components/Nav.jsx';
+import useAuthContext from '../../hooks/index.js';
+import { registartionSchema } from '../../schemas/index.js';
+import Nav from '../Nav';
 
 const Signup = () => {
   const rollbar = useRollbar();
@@ -46,6 +46,12 @@ const Signup = () => {
       }
     },
   });
+
+  useEffect(() => {
+    if (useAuth.data) {
+      navigate('/');
+    }
+  }, [useAuth.data, navigate]);
 
   return (
     <>

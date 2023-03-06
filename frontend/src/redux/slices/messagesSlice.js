@@ -22,6 +22,5 @@ const messagesSlice = createSlice({
   },
 });
 
-export const messagesSelector = (state) => state.messages;
 export const { addMessage } = messagesSlice.actions;
 export default messagesSlice.reducer;
