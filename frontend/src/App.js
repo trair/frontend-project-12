@@ -4,7 +4,7 @@ import {
 } from 'react-router-dom';
 import Checker from './pages/chat/components/Checker';
 import Login from './pages/login/Login';
-import NotFoundPage from './pages/notFoundPage';
+import NotFoundPage from './pages/NotFoundPage';
 import Signup from './pages/signup/Signup';
 
 import { useAuthContext } from './context/index.js';
