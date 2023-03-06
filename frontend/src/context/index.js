@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 
 const Context = createContext({});
-export const SocketContext = createContext(null);
+export const ApiProvider = createContext(null);
 export const useAuthContext = () => useContext(Context);
-export const useSocketContext = () => useContext(SocketContext);
+export const useSocketContext = () => useContext(ApiProvider);
 export default Context;

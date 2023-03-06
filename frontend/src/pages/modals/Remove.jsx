@@ -3,17 +3,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useTranslation } from 'react-i18next';
-import { useSocketContext } from '../../hooks/index.js';
+import { useSocketContext } from '../../context/index.js';
 import { toastWarning } from '../toasts/index.js';
 import unlockElementWithDelay from '../../utils/unlockElementWithDelay.js';
-import { modalSelector } from '../../redux/selectors.js';
-import { closeModal } from '../../redux/slices/modalSlice.js';
+import { modalSelector, closeModal } from '../../redux/slices/modalSlice.js';
 
 const Remove = () => {
   const { t } = useTranslation();
   const [isSubmitting, setSubmitting] = useState(false);
   const { removeChannel } = useSocketContext();
-  const { isShowing, payload } = useSelector((state) => modalSelector(state));
+  const { isShowing, payload } = useSelector(modalSelector);
   const dispatch = useDispatch();
 
   const deleteChannel = () => {
@@ -21,7 +20,6 @@ const Remove = () => {
 
     const resolve = () => {
       toastWarning(t('toasts.delete'));
-      /* setSubmitting(false); */
       dispatch(closeModal());
     };
 

@@ -7,18 +7,18 @@ import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import { useTranslation } from 'react-i18next';
 import { channelSchema } from '../../schemas/index.js';
-import { useSocketContext } from '../../hooks/index.js';
+import { useSocketContext } from '../../context/index.js';
 import isExistsChannelName from '../../utils/isExistsChannelName.js';
-import channelsSelector, { modalSelector } from '../../redux/selectors.js';
-import { closeModal } from '../../redux/slices/modalSlice.js';
+import { channelsSelector } from '../../redux/slices/channelsSlice.js';
+import { modalSelector, closeModal } from '../../redux/slices/modalSlice.js';
 import { toastInfo } from '../toasts/index.js';
 
 import unlockElementWithDelay from '../../utils/unlockElementWithDelay.js';
 
 const Rename = () => {
   const { t } = useTranslation();
-  const channels = useSelector((state) => channelsSelector(state));
-  const { isShowing, payload } = useSelector((state) => modalSelector(state));
+  const channels = useSelector(channelsSelector);
+  const { isShowing, payload } = useSelector(modalSelector);
   const { renameChannelName } = useSocketContext();
   const dispatch = useDispatch();
   const input = useRef();

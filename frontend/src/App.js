@@ -1,13 +1,14 @@
-import React, { useState, useMemo } from 'react';
+import React from 'react';
 import {
   BrowserRouter, Navigate, Route, Routes,
 } from 'react-router-dom';
 import Checker from './pages/chat/components/Checker';
 import Login from './pages/login/Login';
-import NotFoundPage from './pages/notFoundPage';
+import NotFoundPage from './pages/NotFoundPage';
 import Signup from './pages/signup/Signup';
 
-import Context, { useAuthContext } from './context/index.js';
+import { useAuthContext } from './context/index.js';
+import AuthProvider from './context/AuthProvider';
 
 const PrivateRoute = ({ children }) => {
   const authContext = useAuthContext();
@@ -19,20 +20,8 @@ const AuthRoute = ({ children }) => {
   return authContext.data ? <Navigate to="/" /> : children;
 };
 
-const MainProvider = ({ children }) => {
-  const [userData, setUserData] = useState(JSON.parse(localStorage.getItem('user')));
-
-  const memo = useMemo(() => ({ data: userData, setUserData }), [userData]);
-
-  return (
-    <Context.Provider value={memo}>
-      {children}
-    </Context.Provider>
-  );
-};
-
 const App = () => (
-  <MainProvider>
+  <AuthProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={(<PrivateRoute><Checker /></PrivateRoute>)} />
@@ -41,7 +30,7 @@ const App = () => (
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
-  </MainProvider>
+  </AuthProvider>
 );
 
 export default App;
