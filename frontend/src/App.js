@@ -3,9 +3,9 @@ import {
   BrowserRouter, Navigate, Route, Routes,
 } from 'react-router-dom';
 import Chat from './pages/chat/Chat';
-import Login from './pages/Login';
+import Login from './pages/login/Login';
 import NotFoundPage from './pages/notFoundPage';
-import Signup from './pages/Signup';
+import Signup from './pages/signup/Signup';
 
 import Context, { useAuthContext } from './context/index.js';
 
