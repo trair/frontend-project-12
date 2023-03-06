@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  BrowserRouter, Navigate, Route, Routes,
+  BrowserRouter, Navigate, Route, Routes, Outlet,
 } from 'react-router-dom';
 import Checker from './pages/chat/components/Checker';
 import Login from './pages/login/Login';
@@ -10,14 +10,14 @@ import Signup from './pages/signup/Signup';
 import { useAuthContext } from './context/index.js';
 import MainProvider from './context/MainProvider';
 
-const PrivateRoute = ({ children }) => {
+const PrivateRoute = () => {
   const authContext = useAuthContext();
-  return authContext.data ? children : <Navigate to="/login" />;
+  return authContext.data ? <Outlet /> : <Navigate to="/login" />;
 };
 
-const AuthRoute = ({ children }) => {
+const AuthRoute = () => {
   const authContext = useAuthContext();
-  return authContext.data ? <Navigate to="/" /> : children;
+  return authContext.data ? <Navigate to="/" /> : <Outlet />;
 };
 
 const App = () => (
