@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import {
   BrowserRouter, Navigate, Route, Routes,
 } from 'react-router-dom';
-import Chat from './pages/Chat';
+import Chat from './pages/chat/Chat';
 import Login from './pages/Login';
 import NotFoundPage from './pages/notFoundPage';
 import Signup from './pages/Signup';
