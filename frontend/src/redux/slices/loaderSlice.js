@@ -13,6 +13,9 @@ const loaderSlice = createSlice({
     builder.addCase(fetchAuthorizationData.fulfilled, (state) => {
       state.status = 'LOADED';
     });
+    builder.addCase(fetchAuthorizationData.rejected, (state) => {
+      state.status = 'ERROR';
+    });
   },
 });
 
