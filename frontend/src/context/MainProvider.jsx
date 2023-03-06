@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import Context from './index.js';
 
-const AuthProvider = ({ children }) => {
+const MainProvider = ({ children }) => {
   const [userData, setUserData] = useState(JSON.parse(localStorage.getItem('user')));
 
   const memo = useMemo(() => ({ data: userData, setUserData }), [userData]);
@@ -13,4 +13,4 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-export default AuthProvider;
+export default MainProvider;

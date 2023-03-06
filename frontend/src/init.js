@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import { I18nextProvider } from 'react-i18next';
-import { ApiProvider } from './context/index.js';
+import { SocketContext } from './context/index.js';
 import { addChannel, deleteChannel, renameChannel } from './redux/slices/channelsSlice.js';
 import { addMessage } from './redux/slices/messagesSlice.js';
 import store from './redux/index.js';
@@ -83,7 +83,7 @@ const runApp = () => {
       <RollbarProvider config={rollbarConfig}>
         <ErrorBoundary>
           <I18nextProvider i18n={i18Instance}>
-            <ApiProvider.Provider
+            <SocketContext.Provider
               value={{
                 addNewMessage,
                 addNewChannel,
@@ -92,7 +92,7 @@ const runApp = () => {
               }}
             >
               <App />
-            </ApiProvider.Provider>
+            </SocketContext.Provider>
           </I18nextProvider>
         </ErrorBoundary>
       </RollbarProvider>

@@ -1,27 +1,27 @@
 import React from 'react';
 import {
-  BrowserRouter, Navigate, Route, Routes, Outlet,
+  BrowserRouter, Navigate, Route, Routes,
 } from 'react-router-dom';
 import Checker from './pages/chat/components/Checker';
 import Login from './pages/login/Login';
-import NotFoundPage from './pages/NotFoundPage';
+import NotFoundPage from './pages/notFoundPage';
 import Signup from './pages/signup/Signup';
 
 import { useAuthContext } from './context/index.js';
-import AuthProvider from './context/AuthProvider';
+import MainProvider from './context/MainProvider';
 
-const PrivateRoute = () => {
+const PrivateRoute = ({ children }) => {
   const authContext = useAuthContext();
-  return authContext.data ? <Outlet /> : <Navigate to="/login" />;
+  return authContext.data ? children : <Navigate to="/login" />;
 };
 
-const AuthRoute = () => {
+const AuthRoute = ({ children }) => {
   const authContext = useAuthContext();
-  return authContext.data ? <Navigate to="/" /> : <Outlet />;
+  return authContext.data ? <Navigate to="/" /> : children;
 };
 
 const App = () => (
-  <AuthProvider>
+  <MainProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={(<PrivateRoute><Checker /></PrivateRoute>)} />
@@ -30,7 +30,7 @@ const App = () => (
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
-  </AuthProvider>
+  </MainProvider>
 );
 
 export default App;
