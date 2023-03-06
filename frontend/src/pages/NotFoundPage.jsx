@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+
+import LanguageSwitcher from '../LanguageSwitcher';
 import Nav from './Nav';
 
 const NotFoundPage = () => {
@@ -8,6 +10,7 @@ const NotFoundPage = () => {
   return (
     <>
       <Nav />
+      <LanguageSwitcher />
       <div className="text-center">
         <img
           alt={t('notFoundPage')}

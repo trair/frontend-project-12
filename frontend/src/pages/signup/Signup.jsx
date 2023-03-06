@@ -10,6 +10,8 @@ import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 import { useAuthContext } from '../../context/index.js';
 import { registartionSchema } from '../../schemas/index.js';
+
+import LanguageSwitcher from '../LanguageSwitcher';
 import Nav from '../Nav';
 
 const Signup = () => {
@@ -50,6 +52,7 @@ const Signup = () => {
   return (
     <>
       <Nav />
+      <LanguageSwitcher />
       <div className="container-fluid h-100">
         <div className="row justify-content-center align-content-center h-100">
           <div className="col-12 col-md-8 col-xxl-6">
