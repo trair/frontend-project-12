@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import LanguageSwitcher from './LanguageSwitcher.jsx';
 import Nav from './Nav';
+import routes from '../routes.js';
 
 const NotFoundPage = () => {
   const { t } = useTranslation();
@@ -21,7 +22,7 @@ const NotFoundPage = () => {
         <p className="text-muted">
           {t('canGoTo')}
           {' '}
-          <Link to="/">{t('linkToMain')}</Link>
+          <Link to={routes.rootPagePath()}>{t('linkToMain')}</Link>
         </p>
       </div>
     </>

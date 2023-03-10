@@ -39,7 +39,7 @@ const Signup = () => {
           localStorage.setItem('user', JSON.stringify(user));
           useAuth.setUserData(data);
 
-          navigate('/');
+          navigate(routes.rootPagePath());
         }
       } catch (error) {
         rollbar.error('Sign up', error);
