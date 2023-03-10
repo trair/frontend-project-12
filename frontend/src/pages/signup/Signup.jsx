@@ -13,7 +13,7 @@ import { registartionSchema } from '../../schemas/index.js';
 
 import LanguageSwitcher from '../LanguageSwitcher';
 import Nav from '../Nav';
-import routes from '../routes.js';
+import routes from '../../routes.js';
 
 const Signup = () => {
   const rollbar = useRollbar();

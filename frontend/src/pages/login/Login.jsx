@@ -13,7 +13,7 @@ import { toastError } from '../toasts/index.js';
 import { useAuthContext } from '../../context/index.js';
 import LanguageSwitcher from '../LanguageSwitcher';
 import Nav from '../Nav';
-import routes from '../routes.js';
+import routes from '../../routes.js';
 
 const Login = () => {
   const rollbar = useRollbar();
