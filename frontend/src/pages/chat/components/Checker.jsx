@@ -6,6 +6,7 @@ import Loader from './Loader.jsx';
 import { useAuthContext } from '../../../context/index.js';
 import fetchAuthorizationData from '../../../redux/thunk.js';
 import Chat from '../Chat';
+import routes from '../../../routes.js';
 
 const Checker = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const Checker = () => {
     localStorage.clear();
     useAuth.setUserData(null);
     dispatch(toDefault());
-    navigate('/login');
+    navigate(routes.loginPagePath());
   }, [useAuth, dispatch, navigate]);
 
   useEffect(() => {
