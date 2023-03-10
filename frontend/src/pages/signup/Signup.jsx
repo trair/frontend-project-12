@@ -13,6 +13,7 @@ import { registartionSchema } from '../../schemas/index.js';
 
 import LanguageSwitcher from '../LanguageSwitcher';
 import Nav from '../Nav';
+import routes from '../routes.js';
 
 const Signup = () => {
   const rollbar = useRollbar();
@@ -31,7 +32,7 @@ const Signup = () => {
     validationSchema: registartionSchema,
     onSubmit: async ({ username, password }, actions) => {
       try {
-        const { data } = await axios.post('/api/v1/signup', { username, password });
+        const { data } = await axios.post(routes.createNewUserPath(), { username, password });
 
         if (data.token) {
           const user = { token: data.token, username: data.username };
@@ -62,7 +63,7 @@ const Signup = () => {
                   <img
                     src="./images/signup.jpg"
                     className="rounded-circle"
-                    alt="Зарегистрироваться"
+                    alt={t('registration')}
                   />
                 </div>
 

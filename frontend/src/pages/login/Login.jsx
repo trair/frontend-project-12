@@ -13,6 +13,7 @@ import { toastError } from '../toasts/index.js';
 import { useAuthContext } from '../../context/index.js';
 import LanguageSwitcher from '../LanguageSwitcher';
 import Nav from '../Nav';
+import routes from '../routes.js';
 
 const Login = () => {
   const rollbar = useRollbar();
@@ -30,7 +31,7 @@ const Login = () => {
     },
     onSubmit: async ({ username, password }, actions) => {
       try {
-        const { data } = await axios.post('/api/v1/login', {
+        const { data } = await axios.post(routes.loginPath(), {
           username,
           password,
         });
@@ -73,7 +74,7 @@ const Login = () => {
                   <img
                     src="./images/enter.jpg"
                     className="rounded-circle"
-                    alt="Войти"
+                    alt={t('logon')}
                   />
                 </div>
 
