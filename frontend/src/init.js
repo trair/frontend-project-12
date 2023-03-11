@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import { I18nextProvider } from 'react-i18next';
 import { ApiProvider } from './context/index.js';
-import { addNewMessage, addNewChannel, removeChannel, renameChannelName } from './socket.js'
+import { addNewMessage, addNewChannel, removeChannel, renameChannelName } from './socket.js';
 import store from './redux/index.js';
 import i18Instance from './i18n/index.js';
 
