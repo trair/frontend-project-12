@@ -59,9 +59,9 @@ const Chat = () => {
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
-        closeOnClick={true}
-        pauseOnHover={true}
-        draggable={true}
+        closeOnClick
+        pauseOnHover
+        draggable
         progress={undefined}
         theme="light"
       />
