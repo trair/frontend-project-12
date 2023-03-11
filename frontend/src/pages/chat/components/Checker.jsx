@@ -25,7 +25,7 @@ const Checker = () => {
   useEffect(() => {
     const { token } = data;
     dispatch(fetchAuthorizationData(token));
-    if (loaderState === 'ERROR') {
+    if (loaderState === 401) {
       disconnect();
     }
   }, [loaderState, data, dispatch, disconnect]);
