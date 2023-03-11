@@ -1,4 +1,3 @@
-import { io } from 'socket.io-client';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
@@ -6,68 +5,17 @@ import { Provider } from 'react-redux';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import { I18nextProvider } from 'react-i18next';
 import { ApiProvider } from './context/index.js';
-import { addChannel, deleteChannel, renameChannel } from './redux/slices/channelsSlice.js';
-import { addMessage } from './redux/slices/messagesSlice.js';
+import { addNewMessage, addNewChannel, removeChannel, renameChannelName } from './socket.js'
 import store from './redux/index.js';
 import i18Instance from './i18n/index.js';
 
 import App from './App.js';
 
 const runApp = () => {
-  const socket = io();
-
   const lng = localStorage.getItem('language');
   if (lng) {
     i18Instance.changeLanguage(lng);
   }
-
-  socket.on('newMessage', (payload) => {
-    store.dispatch(addMessage(payload));
-  });
-
-  socket.on('newChannel', (payload) => {
-    store.dispatch(addChannel(payload));
-  });
-
-  socket.on('removeChannel', (payload) => {
-    store.dispatch(deleteChannel(payload));
-  });
-
-  socket.on('renameChannel', (payload) => {
-    store.dispatch(renameChannel(payload));
-  });
-
-  const addNewMessage = (props, resolve) => {
-    socket.emit('newMessage', props, ({ status }) => {
-      if (status) {
-        resolve();
-      }
-    });
-  };
-
-  const addNewChannel = (props, resolve) => {
-    socket.emit('newChannel', props, ({ status }) => {
-      if (status) {
-        resolve();
-      }
-    });
-  };
-
-  const removeChannel = (props, resolve) => {
-    socket.emit('removeChannel', props, ({ status }) => {
-      if (status) {
-        resolve();
-      }
-    });
-  };
-
-  const renameChannelName = (props, resolve) => {
-    socket.emit('renameChannel', props, ({ status }) => {
-      if (status) {
-        resolve();
-      }
-    });
-  };
 
   const rollbarConfig = {
     enabled: true,
