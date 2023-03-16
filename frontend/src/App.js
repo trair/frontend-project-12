@@ -25,9 +25,15 @@ const App = () => (
   <AuthProvider>
     <BrowserRouter>
       <Routes>
-        <Route path={routes.rootPagePath()} element={(<PrivateRoute><Checker /></PrivateRoute>)} />
-        <Route path={routes.loginPagePath()} element={<AuthRoute><Login /></AuthRoute>} />
-        <Route path={routes.singUpPagePath()} element={<AuthRoute><Signup /></AuthRoute>} />
+        <Route path={routes.rootPagePath()} element={<PrivateRoute />}>
+          <Route path={routes.rootPagePath()} element={<Checker />} />
+        </Route>
+        <Route path={routes.loginPagePath()} element={<AuthRoute />}>
+          <Route path={routes.loginPagePath()} element={<Login />} />
+        </Route>
+        <Route path={routes.singUpPagePath()} element={<AuthRoute />}>
+          <Route path={routes.singUpPagePath()} element={<Signup />} />
+        </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
