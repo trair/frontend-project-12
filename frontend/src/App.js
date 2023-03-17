@@ -2,7 +2,7 @@ import React from 'react';
 import {
   BrowserRouter, Navigate, Route, Routes, Outlet,
 } from 'react-router-dom';
-import Checker from './pages/chat/components/Checker';
+import Chat from './pages/chat/Chat';
 import Login from './pages/login/Login';
 import NotFoundPage from './pages/NotFoundPage';
 import Signup from './pages/signup/Signup';
@@ -26,7 +26,7 @@ const App = () => (
     <BrowserRouter>
       <Routes>
         <Route path={routes.rootPagePath()} element={<PrivateRoute />}>
-          <Route path={routes.rootPagePath()} element={<Checker />} />
+          <Route path={routes.rootPagePath()} element={<Chat />} />
         </Route>
         <Route path={routes.loginPagePath()} element={<AuthRoute />}>
           <Route path={routes.loginPagePath()} element={<Login />} />
@@ -41,4 +41,3 @@ const App = () => (
 );
 
 export default App;
-

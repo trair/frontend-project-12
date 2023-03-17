@@ -1,5 +1,6 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
 import InputMessages from './components/InputMessage';
@@ -7,27 +8,42 @@ import Channels from './components/Channels.jsx';
 import ChatInfo from './components/ChatInfo.jsx';
 import Messages from './components/Messages.jsx';
 import AddChannel from './components/AddChannel';
-import getModal from '../modals/index.js';
-import { modalSelector } from '../../redux/slices/modalSlice';
+import { loaderSelector, toDefault } from '../../redux/slices/loaderSlice.js';
+import fetchAuthorizationData from '../../redux/thunk.js';
+import { useAuthContext } from '../../context/index.js';
 
+import Loader from './components/Loader.jsx';
+import routes from '../../routes.js';
 import LanguageSwitcher from '../LanguageSwitcher';
 import Nav from '../Nav';
-
-const renderModal = (modal) => {
-  if (!modal.isShowing) {
-    return null;
-  }
-
-  const Component = getModal(modal.type);
-  return modal.type === 'adding' ? <Component /> : <Component id={modal.payload} />;
-};
+import Modal from './components/Modal.jsx';
 
 const Chat = () => {
   const { t } = useTranslation();
-  const modal = useSelector(modalSelector);
+  const navigate = useNavigate();
+  const loaderState = useSelector(loaderSelector);
+  const { data } = useAuthContext();
+  const useAuth = useAuthContext();
+  const dispatch = useDispatch();
+
+  const disconnect = useCallback(() => {
+    localStorage.clear();
+    useAuth.setUserData(null);
+    dispatch(toDefault());
+    navigate(routes.loginPagePath());
+  }, [useAuth, dispatch, navigate]);
+
+  useEffect(() => {
+    const { token } = data;
+    dispatch(fetchAuthorizationData(token));
+    if (loaderState === 401) {
+      disconnect();
+    }
+  }, [loaderState, data, dispatch, disconnect]);
 
   return (
     <>
+      {loaderState === 'AWAIT' && <Loader />}
       <Nav button />
       <LanguageSwitcher />
       <div className="container h-100 my-4 overflow-hidden rounded shadow">
@@ -54,7 +70,7 @@ const Chat = () => {
           </div>
         </div>
       </div>
-      {renderModal(modal)}
+      <Modal />
       <ToastContainer
         position="top-right"
         autoClose={5000}
