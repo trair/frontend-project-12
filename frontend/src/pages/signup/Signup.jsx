@@ -152,7 +152,7 @@ const Signup = () => {
                     {t('questions.haveAccount')}
                     {' '}
                   </span>
-                  <Link to="/login">{t('logIn')}</Link>
+                  <Link to={routes.loginPagePath()}>{t('logIn')}</Link>
                 </div>
               </div>
             </div>
