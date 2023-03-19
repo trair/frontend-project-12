@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { channelIdSelector } from '../../../redux/slices/channelsSlice.js';
 import { useSocketContext, useAuthContext } from '../../../context/index.js';
-import unlockElementWithDelay from '../../../utils/unlockElementWithDelay.js';
 
 const InputMessage = () => {
   const { t } = useTranslation();
@@ -38,10 +37,6 @@ const InputMessage = () => {
   };
 
   useEffect(() => {
-    if (isSend) {
-      const toggle = unlockElementWithDelay(setSend, 3000);
-      toggle(false);
-    }
     input.current.focus();
   }, [isSend, channelId]);
 

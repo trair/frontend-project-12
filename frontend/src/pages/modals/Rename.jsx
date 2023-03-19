@@ -8,12 +8,9 @@ import Alert from 'react-bootstrap/Alert';
 import { useTranslation } from 'react-i18next';
 import { channelSchema } from '../../schemas/index.js';
 import { useSocketContext } from '../../context/index.js';
-import isExistsChannelName from '../../utils/isExistsChannelName.js';
 import { channelsSelector } from '../../redux/slices/channelsSlice.js';
 import { modalSelector, closeModal } from '../../redux/slices/modalSlice.js';
 import { toastInfo } from '../toasts/index.js';
-
-import unlockElementWithDelay from '../../utils/unlockElementWithDelay.js';
 
 const Rename = () => {
   const { t } = useTranslation();
@@ -35,7 +32,7 @@ const Rename = () => {
         dispatch(closeModal());
       };
 
-      if (isExistsChannelName(channels, channelName)) {
+      if (channels.find((channel) => channel.name === channelName)) {
         actions.setFieldError('channelName', 'uniq');
         return;
       }
@@ -50,13 +47,8 @@ const Rename = () => {
   };
 
   useEffect(() => {
-    if (formik.isSubmitting) {
-      const toggle = unlockElementWithDelay(formik.setSubmitting, 3000);
-      toggle(false);
-    }
-
-    setTimeout(() => input.current.focus(), 1);
-  }, [formik.isSubmitting, formik.setSubmitting]);
+    input.current.focus();
+  }, []);
 
   return (
     <Modal show={isShowing} onHide={close} centered>
@@ -81,10 +73,10 @@ const Rename = () => {
           <Alert show={!!formik.errors.channelName} variant="danger">{formik.errors.channelName && t(`errors.${formik.errors.channelName}`)}</Alert>
         </Modal.Body>
         <Modal.Footer>
-          <Button type="button" variant="secondary" onClick={close} disabled={formik.isSubmitting}>
+          <Button type="button" variant="secondary" onClick={close}>
             {t('buttons.cancel')}
           </Button>
-          <Button type="submit" variant="danger" disabled={!formik.isValid || formik.isSubmitting}>
+          <Button type="submit" variant="danger" disabled={!formik.isValid}>
             {t('buttons.rename')}
           </Button>
         </Modal.Footer>

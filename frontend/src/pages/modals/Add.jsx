@@ -8,8 +8,6 @@ import Alert from 'react-bootstrap/Alert';
 import { useTranslation } from 'react-i18next';
 import { useSocketContext } from '../../context/index.js';
 import { channelSchema } from '../../schemas/index.js';
-import isExistsChannelName from '../../utils/isExistsChannelName.js';
-import unlockElementWithDelay from '../../utils/unlockElementWithDelay.js';
 import { channelsSelector } from '../../redux/slices/channelsSlice.js';
 import { modalSelector, closeModal } from '../../redux/slices/modalSlice.js';
 import toastSuccess from '../toasts/index.js';
@@ -34,7 +32,7 @@ const Add = () => {
         dispatch(closeModal());
       };
 
-      if (isExistsChannelName(channels, channelName)) {
+      if (channels.find((channel) => channel.name === channelName)) {
         actions.setFieldError('channelName', 'uniq');
         return;
       }
@@ -49,13 +47,8 @@ const Add = () => {
   };
 
   useEffect(() => {
-    if (formik.isSubmitting) {
-      const toggle = unlockElementWithDelay(formik.setSubmitting, 3000);
-      toggle(false);
-    }
-
-    setTimeout(() => input.current.focus(), 1);
-  }, [formik.isSubmitting, formik.setSubmitting]);
+    input.current.focus();
+  }, []);
 
   return (
     <Modal show={isShowing} onHide={close} centered>
@@ -74,7 +67,6 @@ const Add = () => {
               placeholder={t('channels.typeChannelName')}
               autoComplete="off"
               onChange={formik.handleChange}
-              disabled={formik.isSubmitting}
             />
             <Form.Label className="visually-hidden" htmlFor="channelName">Имя канала</Form.Label>
           </Form.Group>
@@ -84,7 +76,7 @@ const Add = () => {
           <Button type="button" variant="secondary" disabled={formik.isSubmitting} onClick={close}>
             {t('buttons.cancel')}
           </Button>
-          <Button type="submit" variant="primary" disabled={!formik.isValid || formik.isSubmitting}>
+          <Button type="submit" variant="primary" disabled={!formik.isValid}>
             {t('buttons.send')}
           </Button>
         </Modal.Footer>

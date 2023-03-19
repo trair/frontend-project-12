@@ -19,7 +19,7 @@ const Signup = () => {
   const rollbar = useRollbar();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const useAuth = useAuthContext();
+  const { logIn } = useAuthContext();
 
   const {
     values, handleChange, handleSubmit, errors, handleBlur, touched,
@@ -35,10 +35,7 @@ const Signup = () => {
         const { data } = await axios.post(routes.createNewUserPath(), { username, password });
 
         if (data.token) {
-          const user = { token: data.token, username: data.username };
-          localStorage.setItem('user', JSON.stringify(user));
-          useAuth.setUserData(data);
-
+          logIn(data);
           navigate(routes.rootPagePath());
         }
       } catch (error) {
