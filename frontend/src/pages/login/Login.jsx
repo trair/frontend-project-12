@@ -38,7 +38,7 @@ const Login = () => {
         });
 
         if (data.token) {
-          logIn(data)
+          logIn(data);
           navigate(routes.rootPagePath());
         }
       } catch (error) {

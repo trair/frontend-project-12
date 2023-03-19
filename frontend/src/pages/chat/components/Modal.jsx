@@ -7,7 +7,7 @@ const Modal = () => {
     if (!modal.isShowing) {
       return null;
     }
-  
+
     const Component = getModal(modal.type);
     return modal.type === 'adding' ? <Component /> : <Component id={modal.payload} />;
   };
