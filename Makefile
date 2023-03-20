@@ -7,8 +7,15 @@ start-backend:
 start:
 	make start-backend & make start-frontend
 
-lint:
+deploy:
+	git push heroku master
+
+lint-frontend:
 	make -C frontend lint
 
 install:
-	make -C frontend install
+	npm install & npm ci
+
+build:
+	npm run build
+	npm run start
