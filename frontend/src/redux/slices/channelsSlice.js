@@ -1,47 +1,49 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
-import fetchAuthorizationData from '../thunk.js';
+import { fetchData } from './loaderSlice.js';
 
 const channelsSlice = createSlice({
   name: 'channels',
   initialState: { channels: [], currentChannelId: 1 },
   reducers: {
-    changeChannel: (state, { payload }) => {
-      state.currentChannelId = payload;
-    },
-    addChannel: (state, { payload }) => {
+    addChannel(state, { payload }) {
+      if (state.channels.some((channel) => channel.id === payload.id)) {
+        return;
+      }
       state.channels.push(payload);
+    },
+    changeChannel(state, { payload }) {
       state.currentChannelId = payload.id;
     },
-    deleteChannel: (state, { payload }) => {
-      const index = state.channels.findIndex(({ id }) => id === payload.id);
-      const { id: idToBeDeletedChannel } = state.channels[index];
-
-      if (idToBeDeletedChannel === state.currentChannelId) {
+    deleteChannel(state, { payload }) {
+      const newChannels = state.channels.filter((channel) => channel.id !== payload.id);
+      state.channels = newChannels;
+      if (payload.id === state.currentChannelId) {
         state.currentChannelId = 1;
       }
-
-      state.channels.splice(index, 1);
     },
-    renameChannel: (state, { payload }) => {
-      const index = state.channels.findIndex(({ id }) => id === payload.id);
-      state.channels[index].name = payload.name;
+    renameChannel(state, { payload }) {
+      state.channels = state.channels.reduce((acc, channel) => {
+        const curentName = channel.id === payload.id ? payload.name : channel.name;
+        return [...acc, { ...channel, name: curentName }];
+      }, []);
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchAuthorizationData.fulfilled, (state, { payload }) => {
-      state.channels = payload.channels;
-      state.currentChannelId = payload.currentChannelId;
-    });
+    builder
+      .addCase(fetchData.fulfilled, (state, { payload }) => {
+        const { channels, currentChannelId } = payload;
+        state.channels = channels;
+        state.currentChannelId = currentChannelId;
+      });
   },
 });
 
-export const channelIdSelector = (state) => state.channels.currentChannelId;
-export const channelsSelector = (state) => state.channels.channels;
 export const {
-  changeChannel,
   addChannel,
+  changeChannel,
   deleteChannel,
   renameChannel,
 } = channelsSlice.actions;
+export const channelsSelector = ((state) => state.channels);
 export default channelsSlice.reducer;

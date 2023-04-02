@@ -9,12 +9,11 @@ import ChatInfo from './components/ChatInfo.jsx';
 import Messages from './components/Messages.jsx';
 import AddChannel from './components/AddChannel';
 import { loaderSelector, toDefault } from '../../redux/slices/loaderSlice.js';
-import fetchAuthorizationData from '../../redux/thunk.js';
+import { fetchData } from '../../redux/slice/loaderSlice.js';
 import { useAuthContext } from '../../context/index.js';
 
 import Loader from './components/Loader.jsx';
 import routes from '../../routes.js';
-import LanguageSwitcher from '../LanguageSwitcher';
 import Nav from '../Nav';
 import Modal from './components/Modal.jsx';
 
@@ -35,7 +34,7 @@ const Chat = () => {
 
   useEffect(() => {
     const { token } = data;
-    dispatch(fetchAuthorizationData(token));
+    dispatch(fetchData(token));
     if (loaderState === 401) {
       disconnect();
     }
@@ -45,7 +44,6 @@ const Chat = () => {
     <>
       {loaderState === 'AWAIT' && <Loader />}
       <Nav button />
-      <LanguageSwitcher />
       <div className="container h-100 my-4 overflow-hidden rounded shadow">
         <div className="row h-100 bg-white flex-md-row">
           <div className="col-4 col-md-2 border-end pt-5 px-0 bg-light">

@@ -15,6 +15,7 @@ const Remove = () => {
   const dispatch = useDispatch();
 
   const deleteChannel = () => {
+
     const resolve = () => {
       toastWarning(t('toasts.delete'));
       dispatch(closeModal());

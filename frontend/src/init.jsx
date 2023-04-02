@@ -4,16 +4,13 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import { I18nextProvider } from 'react-i18next';
-import { ApiProvider } from './context/index.js';
-import {
-  addNewMessage, addNewChannel, removeChannel, renameChannelName,
-} from './socket.js';
-import store from './redux/index.js';
+import SocketProvider from './context/socket/SocketProvider';
+import store from './redux/slices/index.js';
 import i18Instance from './i18n/index.js';
 
-import App from './App.js';
+import App from './App.jsx';
 
-const runApp = () => {
+const RunApp = ({ socket }) => {
   const lng = localStorage.getItem('language');
   if (lng) {
     i18Instance.changeLanguage(lng);
@@ -33,16 +30,9 @@ const runApp = () => {
       <RollbarProvider config={rollbarConfig}>
         <ErrorBoundary>
           <I18nextProvider i18n={i18Instance}>
-            <ApiProvider.Provider
-              value={{
-                addNewMessage,
-                addNewChannel,
-                removeChannel,
-                renameChannelName,
-              }}
-            >
+            <SocketProvider socket={socket}>
               <App />
-            </ApiProvider.Provider>
+            </SocketProvider>
           </I18nextProvider>
         </ErrorBoundary>
       </RollbarProvider>
@@ -50,4 +40,4 @@ const runApp = () => {
   );
 };
 
-export default runApp;
+export default RunApp;

@@ -11,7 +11,6 @@ import { useRollbar } from '@rollbar/react';
 import { ToastContainer } from 'react-toastify';
 import { toastError } from '../toasts/index.js';
 import { useAuthContext } from '../../context/index.js';
-import LanguageSwitcher from '../LanguageSwitcher';
 import Nav from '../Nav';
 import routes from '../../routes.js';
 
@@ -38,7 +37,7 @@ const Login = () => {
         });
 
         if (data.token) {
-          logIn(data);
+          logIn(data)
           navigate(routes.rootPagePath());
         }
       } catch (error) {
@@ -62,7 +61,6 @@ const Login = () => {
   return (
     <>
       <Nav />
-      <LanguageSwitcher />
       <div className="container-fluid h-100">
         <div className="row justify-content-center align-content-center h-100">
           <div className="col-12 col-md-8 col-xxl-6">

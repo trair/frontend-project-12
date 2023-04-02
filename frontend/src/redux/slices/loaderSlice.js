@@ -1,26 +1,42 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
-import { createSlice } from '@reduxjs/toolkit';
-import fetchAuthorizationData from '../thunk.js';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+import routes from '../../routes';
 
-const loaderSlice = createSlice({
-  name: 'loader',
-  initialState: { status: 'AWAIT' },
+export const fetchData = createAsyncThunk(
+  'fetchData',
+  async (data) => {
+    const response = await axios.get(routes.dataPath(), data);
+    return response.data;
+  },
+);
+
+const downloadStatusSlice = createSlice({
+  name: 'downloadStatus',
+  initialState: { loadingStatus: 'idle', error: null },
   reducers: {
-    toDefault(state) {
-      state.status = 'AWAIT';
+    setStatus(state) {
+      state.loadingStatus = 'idle';
+      state.error = null;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchAuthorizationData.fulfilled, (state) => {
-      state.status = 'LOADED';
-    });
-    builder.addCase(fetchAuthorizationData.rejected, (state) => {
-      state.status = 401;
-    });
+    builder
+      .addCase(fetchData.pending, (state) => {
+        state.loadingStatus = 'loading';
+        state.error = null;
+      })
+      .addCase(fetchData.fulfilled, (state) => {
+        state.loadingStatus = 'loaded';
+        state.error = null;
+      })
+      .addCase(fetchData.rejected, (state, action) => {
+        state.loadingStatus = 'failed';
+        state.error = action.error;
+      });
   },
 });
 
-export const loaderSelector = (state) => state.loader.status;
-export const { toDefault } = loaderSlice.actions;
-export default loaderSlice.reducer;
+export const { setStatus } = downloadStatusSlice.actions;
+export const downloadStatusSelector = ((state) => state.downloadStatus);
+export default downloadStatusSlice.reducer;
